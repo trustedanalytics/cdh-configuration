@@ -1,0 +1,9 @@
+---
+- name: set /etc/security/limit.conf
+  pam_limits:
+    backup: yes
+    domain: "{{ item.domain }}"
+    limit_item: "{{ item.limit_item }}"
+    limit_type: "{{ item.limit_type }}"
+    value: "{{ item.value }}"
+  with_items: limits

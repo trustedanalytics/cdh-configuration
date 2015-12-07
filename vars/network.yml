@@ -1,0 +1,11 @@
+---
+#linux network optimizations
+network_settings:
+  net.ipv4.ip_local_port_range: 10000 61000
+  net.ipv4.tcp_fin_timeout: 30
+  net.ipv4.tcp_tw_recycle: 1
+  net.ipv4.tcp_tw_reuse: 1
+  net.core.somaxconn: 1024
+  net.core.netdev_max_backlog: 2048
+  net.ipv4.tcp_max_syn_backlog: 4096
+  net.core.optmem_max: 1048576

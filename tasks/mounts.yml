@@ -1,0 +1,29 @@
+---
+- name: check for file system
+  shell:  " lsblk -f /dev/{{ item }}  | grep 'ext[2-4]' "
+  ignore_errors: True
+  register: formatted
+  with_items:  hostvars[inventory_hostname]["ansible_devices"].keys()
+  when: not  hostvars[inventory_hostname]["ansible_devices"][item]["partitions"]
+ 
+- debug: var=formatted
+
+- shell: echo bleh {{ item.item }}
+  with_items: "{{ formatted.results }}"
+  when: " item.changed and not item.stdout"
+
+- filesystem: 
+    force: yes 
+    dev: /dev/{{ item.item }} 
+    fstype: "{{ fstype }}"
+  with_items: "{{ formatted.results }}"
+  when: " item.changed and not item.stdout"
+
+- mount:
+    name: /mnt/{{item.item}}
+    src: /dev/{{ item.item }}
+    fstype: "{{ fstype }}"
+    state: mounted
+    opts: "noatime"
+  with_items:  "{{ formatted.results }}"
+  when: " item.changed and item.stdout " 

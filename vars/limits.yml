@@ -1,0 +1,8 @@
+---
+limits:
+    - { domain: hadoop, limit_type: -, limit_item: nofile,  value: 32768      }
+    - { domain: hadoop, limit_type: -, limit_item: nproc,   value: unlimited  }
+    - { domain: hdfs,   limit_type: -, limit_item: nofile,  value: 32768      }
+    - { domain: hbase,  limit_type: -, limit_item: nofile,  value: 32768      }
+    - { domain: spark,  limit_type: -, limit_item: nofile,  value: 65535      }
+    - { domain: spark,  limit_type: -, limit_item: nproc,   value: 32768      }

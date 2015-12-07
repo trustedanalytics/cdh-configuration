@@ -1,0 +1,6 @@
+---
+# vars file for cdh-opti
+  defrag_path: /sys/kernel/mm/redhat_transparent_hugepage/defrag
+  rc_local: /etc/rc.local
+  swappiness: 10
+  fstype: ext4

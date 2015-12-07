@@ -1,0 +1,9 @@
+---
+- name: install libselinux-python
+  yum:
+    name: libselinux-python
+    state: present
+
+- name: turn off selinux
+  selinux:
+    state: disabled

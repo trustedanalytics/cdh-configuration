@@ -1,0 +1,8 @@
+---
+- name: network optimizations 
+  sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    ignoreerrors: yes
+  with_dict: network_settings
