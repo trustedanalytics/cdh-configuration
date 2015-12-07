@@ -1,4 +1,8 @@
 ---
+#have mixed feelings with the way i did this.
+#Ideally i would only issue commands to filesystem and mount but i had
+#issues with the previously configured raid setup.
+#Going to make formatting and mounting optional
 - name: check for file system
   shell:  " lsblk -f /dev/{{ item }}  | grep 'ext[2-4]' "
   ignore_errors: True
