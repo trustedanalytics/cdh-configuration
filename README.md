@@ -1,8 +1,16 @@
 cdh-configuration
 =========
 
-Prepare a Host machines for a Hadoop/CDH installation. Perform a variety of
-configurations like turning off iptables, updating file and process limits, ....
+Prepare a Host machines for a Hadoop/CDH installation.
+
+Performs the following
+- turns off huge pages
+- turns off iptables
+- increases [file and process limits](vars/limits.yml) for hadoop, spark, hdfs, and hbase
+- mount all unformated disks
+- update network configuration in [sysctl](vars/network.yml)
+- turn off selinux
+- set vm swappiness to [10](vars/RedHat.yml)
 
 Requirements
 ------------
