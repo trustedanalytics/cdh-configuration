@@ -47,3 +47,7 @@ Author Information
 ------------------
 
 trustedanalytics.github.io
+
+Bugs
+----
+Bugs can be submitted to jira https://trustedanalytics.atlassian.net
