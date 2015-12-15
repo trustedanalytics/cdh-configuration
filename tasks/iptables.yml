@@ -4,3 +4,5 @@
     name: iptables
     enabled: no
     state: stopped
+  tags:
+    - cdh

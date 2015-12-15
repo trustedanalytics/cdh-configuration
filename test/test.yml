@@ -3,5 +3,10 @@
   become: yes
   become_user: root
   roles:
-  - { role: cdh-configuration }
+    - cdh-configuration
+  vars:
+    http_proxy: "http://someproxy"
+    https_proxy: "https://someproxy"
+    socks_proxy:  "socks://some proxy"
+    no_proxy: "some ips"
   

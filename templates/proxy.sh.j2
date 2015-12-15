@@ -1,0 +1,24 @@
+{% if http_proxy %}
+export http_proxy={{ http_proxy }}
+export HTTP_PROXY=$http_proxy
+{% endif %}
+{% if https_proxy %}
+export https_proxy={{ https_proxy }}
+export HTTPS_PROXY=$https_proxy
+{% endif %}
+{% if ftp_proxy %}
+export ftp_proxy={{ ftp_proxy }}
+export FTP_PROXY=$ftp_proxy
+{% endif %}
+{% if socks_proxy %}
+export socks_proxy={{ socks_proxy }}
+export SOCKS_PROXY=$socks_proxy
+{% endif %}
+{% if no_proxy %}
+export no_proxy={{ no_proxy }}
+export NO_PROXY=$no_proxy
+{% endif %}
+
+
+
+

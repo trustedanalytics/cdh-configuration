@@ -6,3 +6,5 @@
     state: present
     ignoreerrors: yes
   with_dict: network_settings
+  tags:
+    - cdh

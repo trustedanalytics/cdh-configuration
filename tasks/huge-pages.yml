@@ -3,21 +3,31 @@
   shell:  "cat {{ defrag_path }} | grep '\\[never\\]' "
   register: huge_pages
   ignore_errors: True
+  tags:
+    - cdh
 
 - name: turn off huge pages
   shell: "echo 'never' > {{ defrag_path }} "
   when: "not huge_pages.stdout"
+  tags:
+    - cdh
 
 - name: check persistance of huge pages
   shell: " cat {{ rc_local }} | grep 'echo.*never.*>.*defrag' "
   register: huge_pages_persist
   ignore_errors: True
+  tags:
+    - cdh
 
 - name: persist off huge pages
   shell: "echo 'echo never > /sys/kernel/mm/redhat_transparent_hugepage/defrag' >> {{ rc_local }} "
   when: "not huge_pages_persist.stdout"
+  tags:
+    - cdh
 
 - name: check for huge pages
   shell:  "cat {{ defrag_path }} | grep '\\[never\\]' "
   register: huge_pages
   ignore_errors: True
+  tags:
+    - cdh

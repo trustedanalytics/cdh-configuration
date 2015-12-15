@@ -9,6 +9,7 @@
 - name: Include limits
   include_vars: 'limits.yml'
   
+- include: proxy.yml
 - include: huge-pages.yml
 - include: vm-swappiness.yml
 - include: network.yml

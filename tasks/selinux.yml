@@ -3,7 +3,11 @@
   yum:
     name: libselinux-python
     state: present
+  tags:
+    - cdh
 
 - name: turn off selinux
   selinux:
     state: disabled
+  tags:
+    - cdh

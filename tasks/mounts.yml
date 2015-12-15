@@ -9,12 +9,14 @@
   register: formatted
   with_items:  hostvars[inventory_hostname]["ansible_devices"].keys()
   when: not  hostvars[inventory_hostname]["ansible_devices"][item]["partitions"]
- 
-- debug: var=formatted
+  tags:
+    - cdh
 
 - shell: echo bleh {{ item.item }}
   with_items: "{{ formatted.results }}"
   when: " item.changed and not item.stdout"
+  tags:
+    - cdh
 
 - filesystem: 
     force: yes 
@@ -22,6 +24,8 @@
     fstype: "{{ fstype }}"
   with_items: "{{ formatted.results }}"
   when: " item.changed and not item.stdout"
+  tags:
+    - cdh
 
 - mount:
     name: /mnt/{{item.item}}
@@ -31,3 +35,5 @@
     opts: "noatime"
   with_items:  "{{ formatted.results }}"
   when: " item.changed and item.stdout " 
+  tags:
+    - cdh
