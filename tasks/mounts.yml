@@ -28,7 +28,7 @@
     - cdh
 
 - mount:
-    name: /mnt/{{item.item}}
+    name: /{{ hdfs_mount  }}/{{item.item}}
     src: /dev/{{ item.item }}
     fstype: "{{ fstype }}"
     state: mounted
