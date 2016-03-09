@@ -5,4 +5,5 @@
     enabled: no
     state: stopped
   tags:
-    - cdh
+    - optimize
+    - iptables

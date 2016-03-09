@@ -1,6 +1,8 @@
 ---
 # vars file for cdh-opti
-  defrag_path: /sys/kernel/mm/redhat_transparent_hugepage/defrag
+  defrag_path: /sys/kernel/mm/redhat_transparent_hugepage/enabled
   rc_local: /etc/rc.local
+  sysctl_path: /etc/sysctl.conf
+  limits_path: /etc/security/limits.conf
   swappiness: 10
   fstype: ext4

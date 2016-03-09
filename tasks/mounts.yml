@@ -10,13 +10,13 @@
   with_items:  hostvars[inventory_hostname]["ansible_devices"].keys()
   when: not  hostvars[inventory_hostname]["ansible_devices"][item]["partitions"]
   tags:
-    - cdh
+    - mounts
 
 - shell: echo bleh {{ item.item }}
   with_items: "{{ formatted.results }}"
   when: " item.changed and not item.stdout"
   tags:
-    - cdh
+    - mounts
 
 - filesystem: 
     force: yes 
@@ -25,7 +25,7 @@
   with_items: "{{ formatted.results }}"
   when: " item.changed and not item.stdout"
   tags:
-    - cdh
+    - mounts
 
 - mount:
     name: /{{ hdfs_mount  }}/{{item.item}}
@@ -36,4 +36,4 @@
   with_items:  "{{ formatted.results }}"
   when: " item.changed and item.stdout " 
   tags:
-    - cdh
+    - mounts

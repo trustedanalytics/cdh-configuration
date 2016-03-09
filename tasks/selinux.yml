@@ -4,10 +4,12 @@
     name: libselinux-python
     state: present
   tags:
-    - cdh
+    - optimize
+    - selinux
 
 - name: turn off selinux
   selinux:
     state: disabled
   tags:
-    - cdh
+    - optimize
+    - selinux

@@ -4,7 +4,9 @@
     name: "{{ item.key }}"
     value: "{{ item.value }}"
     state: present
+    reload: yes
     ignoreerrors: yes
-  with_dict: network_settings
+  with_dict: '{{network_settings}}'
   tags:
-    - cdh
+    - optimize
+    - network

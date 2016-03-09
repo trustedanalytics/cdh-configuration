@@ -1,19 +1,46 @@
 ---
 # tasks file for cdh-opti
+
+#- name: debug os family
+#  debug: msg="{{ ansible_os_family }}"  
+#  tags:
+#    - cdh
+
 - name: Include OS-specific variables.
   include_vars: '{{ ansible_os_family }}.yml'
+  tags:
+   - optimize
   
 - name: Include optimized network settings
   include_vars: 'network.yml'
+  tags:
+   - optimize
   
 - name: Include limits
   include_vars: 'limits.yml'
-  
-- include: proxy.yml
-- include: huge-pages.yml
-- include: vm-swappiness.yml
-- include: network.yml
-- include: mounts.yml
-- include: limits.yml
-- include: selinux.yml
-- include: iptables.yml
+  tags:
+   - optimize
+
+- name: Include Proxy Configuration
+  include: proxy.yml
+
+- name: Include Huge Pages Configuration
+  include: huge-pages.yml
+
+- name: Include VM Swappiness
+  include: vm-swappiness.yml
+
+- name: Include Network Optimizations
+  include: network.yml
+
+- name: Include File Formatting/Mounting Configuration
+  include: mounts.yml
+
+- name: Include Limits Configuration
+  include: limits.yml
+
+- name: Include SElinux Configuration
+  include: selinux.yml
+
+- name: Include IPtables Configuration
+  include: iptables.yml
