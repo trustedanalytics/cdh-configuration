@@ -3,37 +3,44 @@
 #Ideally i would only issue commands to filesystem and mount but i had
 #issues with the previously configured raid setup.
 #Going to make formatting and mounting optional
-- name: check for file system
-  shell:  " lsblk -f /dev/{{ item }}  | grep 'ext[2-4]' "
+
+- name: Getting Filesystem Info
+  shell:  " lsblk -f /dev/{{item}}  | grep 'ext4' "
   ignore_errors: True
-  register: formatted
-  with_items:  hostvars[inventory_hostname]["ansible_devices"].keys()
-  when: not  hostvars[inventory_hostname]["ansible_devices"][item]["partitions"]
+  register: drive_info
+  with_items: '{{hostvars[inventory_hostname]["ansible_devices"].keys()}}'
+  when: item != root_drive
   tags:
     - mounts
 
-- shell: echo bleh {{ item.item }}
-  with_items: "{{ formatted.results }}"
-  when: " item.changed and not item.stdout"
-  tags:
-    - mounts
+#Future task to check if mounted to a different path.
+#should unmount from the specified path.
+#- name: Unmount Drives
+#  mount:
+#    name:
+#    src: /dev/{{item.item}}"
+#    state: unmounted
+#  with_items: "{{ drive_info.results }}"
+#  when: "the mount point is not /hdfs/<drive>"
 
-- filesystem: 
+- name: Format Drives
+  filesystem:
     force: yes 
     dev: /dev/{{ item.item }} 
     fstype: "{{ fstype }}"
-  with_items: "{{ formatted.results }}"
-  when: " item.changed and not item.stdout"
+  with_items: "{{ drive_info.results }}"
+  when: "item.item != root_drive and item.stdout == ''"
   tags:
     - mounts
 
-- mount:
+- name: Mount Drives
+  mount:
     name: /{{ hdfs_mount  }}/{{item.item}}
     src: /dev/{{ item.item }}
     fstype: "{{ fstype }}"
     state: mounted
     opts: "noatime"
-  with_items:  "{{ formatted.results }}"
-  when: " item.changed and item.stdout " 
+  with_items:  "{{ drive_info.results }}"
+  when: "item.item != root_drive and item.changed and not '/{{hdfs_mount}}/{{item.item}}' in item.stdout" 
   tags:
     - mounts
