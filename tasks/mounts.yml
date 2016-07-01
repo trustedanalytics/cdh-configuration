@@ -8,20 +8,28 @@
   shell:  " lsblk -f /dev/{{item}}  | grep 'ext4' "
   ignore_errors: True
   register: drive_info
-  with_items: '{{hostvars[inventory_hostname]["ansible_devices"].keys()}}'
+  with_items: '{{hostvars[inventory_hostname]["ansible_devices"].keys()|sort}}'
   when: item != root_drive
   tags:
     - mounts
+    - testingmounts
 
 #Future task to check if mounted to a different path.
 #should unmount from the specified path.
-#- name: Unmount Drives
-#  mount:
-#    name:
-#    src: /dev/{{item.item}}"
-#    state: unmounted
-#  with_items: "{{ drive_info.results }}"
+- name: Unmount Drives
+  mount:
+    name: /{{ hdfs_mount}}/{{item.item}}
+    src: /dev/{{item.item}}"
+    fstype: "{{ fstype }}"
+    state: unmounted
+  with_items: "{{ drive_info.results }}"
 #  when: "the mount point is not /hdfs/<drive>"
+
+- name: Test Mount
+  debug: msg="Index of {{item.1}} is  {{item.0}}"
+  with_indexed_items: "{{drive_info.results}}"
+  tags:
+    - testingmounts
 
 - name: Format Drives
   filesystem:
@@ -35,7 +43,7 @@
 
 - name: Mount Drives
   mount:
-    name: /{{ hdfs_mount  }}/{{item.item}}
+    name: /{{ hdfs_mount  }}/data{{item.index}}
     src: /dev/{{ item.item }}
     fstype: "{{ fstype }}"
     state: mounted
